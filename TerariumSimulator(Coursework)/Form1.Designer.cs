@@ -84,7 +84,7 @@
             // cbTileLables
             // 
             this.cbTileLables.AutoSize = true;
-            this.cbTileLables.Location = new System.Drawing.Point(619, 262);
+            this.cbTileLables.Location = new System.Drawing.Point(618, 272);
             this.cbTileLables.Name = "cbTileLables";
             this.cbTileLables.Size = new System.Drawing.Size(94, 17);
             this.cbTileLables.TabIndex = 20;
