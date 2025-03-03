@@ -6,18 +6,22 @@ namespace TS_testing__proof_of_concept_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ID   Tile");
-            Console.WriteLine("0    Air");
-            Console.WriteLine("1    Substrate");
-            Console.WriteLine("2    Ant");
-            Console.WriteLine("3    Insect Food");
-            Console.WriteLine();
-            string theGrid[,] = new string[20,20];
-            do while (true)
-                {
-                    GetInput();
+            //Console.WriteLine("ID   Tile");
+            //Console.WriteLine("0    Air");
+            //Console.WriteLine("1    Substrate");
+            //Console.WriteLine("2    Ant");
+            //Console.WriteLine("3    Insect Food");
+            //Console.WriteLine();
+            //string theGrid[,] = new string[20,20];
+            //do while (true)
+            //    {
+            //        GetInput();
 
-                }
+            //    }
+
+            string[,] example = new string[10, 10];
+            Console.WriteLine(example.Length);
+            Console.ReadLine();
         }
 
         private static void GetInput()

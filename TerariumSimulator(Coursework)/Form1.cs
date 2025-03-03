@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 //TO DO
@@ -15,13 +16,16 @@ namespace TerariumSimulator_Coursework_
 {
     public partial class Form1 : Form
     {
+        //Dictionary<string, Color> page = new Dictionary<int, string>();
+        //page.Add("Beecolour", LightYellow);
 
         const int numOfTiles = 400;
         //adding all tile colours here so they can be easily changed for debugging
         //grid size can also be changed for testing, as it is only stored in one place 
-        Color beecolour = Color.LightYellow, antcolour = Color.Black, beetlecolour = Color.DarkGray, snailcolour = Color.SandyBrown;
-        Color substratecolour = Color.Brown, watercolour = Color.Blue, aircolour = Color.LightSkyBlue, hivecolour = Color.LightYellow;
-        Color honeycolour = Color.Gold, stemcolour = Color.Green, flowercolour = Color.Magenta, eggcolour = Color.FloralWhite, foodcolour = Color.Khaki;
+        Color Beecolour = Color.LightYellow, Antcolour = Color.Black, Beetlecolour = Color.DarkGray, Snailcolour = Color.SandyBrown;
+        Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.LightYellow;
+        Color Honeycolour = Color.Gold, Stemcolour = Color.Green, Flowercolour = Color.Magenta, BeeEggcolour = Color.FloralWhite;
+        Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki;
         Color textColour = Color.Black;
         int numColsRows;
         string[,] theGrid = new string[(Convert.ToInt32(Math.Sqrt(numOfTiles))), (Convert.ToInt32(Math.Sqrt(numOfTiles)))];//the 2d array in which tiles will be stored before they're displayed
@@ -82,11 +86,32 @@ namespace TerariumSimulator_Coursework_
 
         }
 
-        private void drawGrid()
+        private void drawGrid() //I apologise to future Maddie, as I have left this a buggy mess. I was working on the load function, but that required the drawGrid to be completed
+            //so now I'm trying to establish a dictionary so I could reference colours in a way c# didn't like
         {
-            //read file (using run length encoding)
-            //fill array according to file
-            //draw grid according to array
+            flowLayoutPanel1.Controls.Clear();
+            numColsRows = (int)Math.Sqrt(numOfTiles);
+            for (int row = 0; row < numColsRows; row++)
+            {
+                for (int col = 0; col < numColsRows; col++)
+                {
+                    Label lblTile = new Label();
+                    string colourName = theGrid[row, col] + "colour";
+                    lblTile.BackColor = colourName;
+                    lblTile.Size = new Size(25, 25);
+                    lblTile.AutoSize = false;
+                    lblTile.Name = row + "," + col;
+                    lblTile.Margin = new Padding(2);
+                    lblTile.Font = new Font("Arial", 5);
+                    theGrid[row, col] = "Air";
+                    lblTile.Text = theGrid[row, col];
+                    lblTile.ForeColor = textColour;
+                    lblTile.Click += LblTile_Click;
+                    flowLayoutPanel1.Controls.Add(lblTile);
+                    labelList.Add(lblTile);
+                    labelList[Getindex(row, col)].BackColor = Aircolour;
+                }
+            }
         }
 
         private void rbSubstrate_CheckedChanged(object sender, EventArgs e)
@@ -167,6 +192,11 @@ namespace TerariumSimulator_Coursework_
         private void rbFlower_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Flower";
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            LoadGame(ref theGrid);
         }
 
         public class bee : creature
@@ -258,6 +288,14 @@ namespace TerariumSimulator_Coursework_
 
         }
 
+        private static void LoadGame(ref string[,] Grid)
+        {
+            string Line = "";
+            StreamReader GridFile = new StreamReader(ActiveSaveFile);
+            DrawGrid(GridFile);
+            GridFile.Close();
+        }
+
         private void UpdateDisplay(int row, int col, Color newColor)
         {
             foreach (Control ctrl in this.flowLayoutPanel1.Controls)
@@ -268,13 +306,6 @@ namespace TerariumSimulator_Coursework_
                     break;
                 }
             }
-        }
-
-
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
