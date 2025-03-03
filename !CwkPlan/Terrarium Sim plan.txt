@@ -1,0 +1,26 @@
+2d simulated terrarium
+
+- bees which build hives, gather nectar and lay eggs which become more bees
+- beetles which steal nectar and eggs and die if there are no 'air' tiles around
+them (to simulate being cooked by bees or pulled apart by ants)
+- ants which dig tunnels, eat beetles and nectar and lay eggs
+- the user can add elements (creatures, substrate, etc.) and change environmental conditions (heat, light, humidity, etc.)
+
+tile types I'll need:
+- substrate (soil making up the ground)
+- hive (made by bees using nectar)
+- plant stem (grows flowers and stem if near water)
+- flower (produces nectar and spreads seeds if bees interact with it)
+- water (needed by plants)
+- air (fills all empty space, beetles need it to live)
+- egg (bee and ant variants, eaten by beetles, otherwise become bees or ants)
+- honey (stored form of nectar, eaten by bees, ants and beetles)
+- insect food (can be placed by the user)
+- bee 
+- ant
+- beetle
+- snail (occasionally appears to eat plant stem and flowers, can be eaten by ants)
+
+
+winforms will be used, a grid of boxes will display data stored in an array 
+representing the tiles within the terrarium
