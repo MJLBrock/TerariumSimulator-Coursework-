@@ -87,7 +87,7 @@ namespace TerariumSimulator_Coursework_
         }
 
         private void drawGrid() //I apologise to future Maddie, as I have left this a buggy mess. I was working on the load function, but that required the drawGrid to be completed
-            //so now I'm trying to establish a dictionary so I could reference colours in a way c# didn't like
+                                //so now I'm trying to establish a dictionary so I could reference colours in a way c# didn't like
         {
             flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
@@ -96,8 +96,7 @@ namespace TerariumSimulator_Coursework_
                 for (int col = 0; col < numColsRows; col++)
                 {
                     Label lblTile = new Label();
-                    string colourName = theGrid[row, col] + "colour";
-                    lblTile.BackColor = colourName;
+                    //lblTile.BackColor = ;
                     lblTile.Size = new Size(25, 25);
                     lblTile.AutoSize = false;
                     lblTile.Name = row + "," + col;
@@ -238,7 +237,7 @@ namespace TerariumSimulator_Coursework_
                 for (int col = 0; col < numColsRows; col++)
                 {
                     Label lblTile = new Label();
-                    lblTile.BackColor = aircolour;
+                    lblTile.BackColor = Aircolour;
                     lblTile.Size = new Size(25, 25);
                     lblTile.AutoSize = false;
                     lblTile.Name = row + "," + col;
@@ -250,7 +249,7 @@ namespace TerariumSimulator_Coursework_
                     lblTile.Click += LblTile_Click;
                     flowLayoutPanel1.Controls.Add(lblTile);
                     labelList.Add(lblTile);
-                    labelList[Getindex(row, col)].BackColor = aircolour;
+                    labelList[Getindex(row, col)].BackColor = Aircolour;
                 }
             }
             tileHeld = "Substrate";
@@ -290,10 +289,10 @@ namespace TerariumSimulator_Coursework_
 
         private static void LoadGame(ref string[,] Grid)
         {
-            string Line = "";
-            StreamReader GridFile = new StreamReader(ActiveSaveFile);
-            DrawGrid(GridFile);
-            GridFile.Close();
+            //string Line = "";
+            //StreamReader GridFile = new StreamReader(ActiveSaveFile);
+            //DrawGrid(GridFile);
+            //GridFile.Close();
         }
 
         private void UpdateDisplay(int row, int col, Color newColor)
