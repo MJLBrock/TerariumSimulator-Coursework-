@@ -5,19 +5,17 @@ using System.IO;
 using System.Windows.Forms;
 
 //TO DO
+//add drawGrid method
 //add substrate
 //add ants
 //add insect food for testing
 //use substrate and ants to test and understand how this will work
-//add drawGrid method
 //work out the rest from there
 
 namespace TerariumSimulator_Coursework_
 {
     public partial class Form1 : Form
     {
-        //Dictionary<string, Color> page = new Dictionary<int, string>();
-        //page.Add("Beecolour", LightYellow);
 
         const int numOfTiles = 400;
         //adding all tile colours here so they can be easily changed for debugging
@@ -82,12 +80,11 @@ namespace TerariumSimulator_Coursework_
                     }
                 }
             }
-            //add draw grid method here when it is complete, as tile labels will probably only change when the grid is reloaded
+            DrawGrid();
 
         }
 
-        private void drawGrid() //I apologise to future Maddie, as I have left this a buggy mess. I was working on the load function, but that required the drawGrid to be completed
-                                //so now I'm trying to establish a dictionary so I could reference colours in a way c# didn't like
+        private void DrawGrid() 
         {
             flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
@@ -102,7 +99,7 @@ namespace TerariumSimulator_Coursework_
                     lblTile.Name = row + "," + col;
                     lblTile.Margin = new Padding(2);
                     lblTile.Font = new Font("Arial", 5);
-                    theGrid[row, col] = "Air";
+                   // theGrid[row, col] = "Air";
                     lblTile.Text = theGrid[row, col];
                     lblTile.ForeColor = textColour;
                     lblTile.Click += LblTile_Click;
@@ -111,8 +108,10 @@ namespace TerariumSimulator_Coursework_
                     labelList[Getindex(row, col)].BackColor = Aircolour;
                 }
             }
+
         }
 
+        
         private void rbSubstrate_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Substrate";
@@ -231,6 +230,7 @@ namespace TerariumSimulator_Coursework_
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
             for (int row = 0; row < numColsRows; row++)
             {
@@ -260,12 +260,13 @@ namespace TerariumSimulator_Coursework_
             //a clock will be used to keep things going: every tick, each tile's code will be executed and the grid will be redrawn
         }
 
-
+      
 
         private int Getindex(int row, int col)
         {
-            return row * (int)Math.Sqrt(numOfTiles) + col;
-        }
+            // return row * (int)Math.Sqrt(numOfTiles) + col;
+            return (20 - row) * (20 + col - 1);
+        }//I don't know what to do with this
 
         private void LblTile_Click(object sender, EventArgs e)
         {
@@ -274,17 +275,17 @@ namespace TerariumSimulator_Coursework_
             string[] ColRow = theTile.Name.Split(',');
             int col = Convert.ToInt32(ColRow[0]), row = Convert.ToInt32(ColRow[1]);
 
-
+        
             if (me.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 theGrid[row, col] = tileHeld.ToString();
+                labelList[Getindex(row, col)].Text = theGrid[row,col];
             }
             else if (me.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 MessageBox.Show(theGrid[row, col]);
             }
-
-
+            //DrawGrid();
         }
 
         private static void LoadGame(ref string[,] Grid)
