@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 //TO DO
@@ -23,7 +22,7 @@ namespace TerariumSimulator_Coursework_
         Color Beecolour = Color.LightYellow, Antcolour = Color.Black, Beetlecolour = Color.DarkGray, Snailcolour = Color.SandyBrown;
         Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.LightYellow;
         Color Honeycolour = Color.Gold, Stemcolour = Color.Green, Flowercolour = Color.Magenta, BeeEggcolour = Color.FloralWhite;
-        Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki;
+        Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki, Glasscolour = Color.Transparent;
         Color textColour = Color.Black;
         int numColsRows;
         string[,] theGrid = new string[(Convert.ToInt32(Math.Sqrt(numOfTiles))), (Convert.ToInt32(Math.Sqrt(numOfTiles)))];//the 2d array in which tiles will be stored before they're displayed
@@ -60,13 +59,16 @@ namespace TerariumSimulator_Coursework_
 
         private void cbTileLables_CheckedChanged(object sender, EventArgs e)
         {
+
             if (cbTileLables.Checked == true)
             {
                 foreach (Control allLabels in flowLayoutPanel1.Controls)
                 {
                     if (allLabels is Label)
                     {
-                        textColour = Color.Transparent;
+                        string[] ColRow = allLabels.Name.Split(',');
+                        int row = Convert.ToInt32(ColRow[0]), col = Convert.ToInt32(ColRow[1]);
+                        textColour = GetColour(ref col, ref row);
                     }
                 }
             }
@@ -84,7 +86,7 @@ namespace TerariumSimulator_Coursework_
 
         }
 
-        private void DrawGrid() 
+        private void DrawGrid()
         {
             flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
@@ -99,19 +101,90 @@ namespace TerariumSimulator_Coursework_
                     lblTile.Name = row + "," + col;
                     lblTile.Margin = new Padding(2);
                     lblTile.Font = new Font("Arial", 5);
-                   // theGrid[row, col] = "Air";
+                    // theGrid[row, col] = "Air";
                     lblTile.Text = theGrid[row, col];
                     lblTile.ForeColor = textColour;
                     lblTile.Click += LblTile_Click;
                     flowLayoutPanel1.Controls.Add(lblTile);
                     labelList.Add(lblTile);
-                    labelList[Getindex(row, col)].BackColor = Aircolour;
+                    labelList[Getindex(row, col)].BackColor = GetColour(ref col, ref row);//DrawGrid won't display colours but LblTile.click will
                 }
             }
 
         }
 
-        
+        private Color GetColour(ref int row, ref int col)
+        {
+            if (theGrid[col, row] == "Substrate")
+            {
+                return Substratecolour;
+            }
+            if (theGrid[col, row] == "Water")
+            {
+                return Watercolour;
+            }
+            if (theGrid[col, row] == "Air")
+            {
+                return Aircolour;
+            }
+            if (theGrid[col, row] == "Stem")
+            {
+                return Stemcolour;
+            }
+            if (theGrid[col, row] == "Flower")
+            {
+                return Flowercolour;
+            }
+            if (theGrid[col, row] == "Hive")
+            {
+                return Hivecolour;
+            }
+            if (theGrid[col, row] == "Honey")
+            {
+                return Honeycolour;
+            }
+            if (theGrid[col, row] == "Glass")
+            {
+                return Glasscolour;
+            }
+            if (theGrid[col, row] == "Bee")
+            {
+                return Beecolour;
+            }
+            if (theGrid[col, row] == "Ant")
+            {
+                return Antcolour;
+            }
+            if (theGrid[col, row] == "Beetle")
+            {
+                return Beetlecolour;
+            }
+            if (theGrid[col, row] == "Snail")
+            {
+                return Snailcolour;
+            }
+            if (theGrid[col, row] == "BeeEgg")
+            {
+                return BeeEggcolour;
+            }
+            if (theGrid[col, row] == "AntEgg")
+            {
+                return AntEggcolour;
+            }
+            if (theGrid[col, row] == "BeetleEgg")
+            {
+                return BeetleEggcolour;
+            }
+            if (theGrid[col, row] == "Food")
+            {
+                return Foodcolour;
+            }
+            else
+            {
+                return Aircolour;
+            }
+        }
+
         private void rbSubstrate_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Substrate";
@@ -230,56 +303,41 @@ namespace TerariumSimulator_Coursework_
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
             for (int row = 0; row < numColsRows; row++)
             {
                 for (int col = 0; col < numColsRows; col++)
                 {
-                    Label lblTile = new Label();
-                    lblTile.BackColor = Aircolour;
-                    lblTile.Size = new Size(25, 25);
-                    lblTile.AutoSize = false;
-                    lblTile.Name = row + "," + col;
-                    lblTile.Margin = new Padding(2);
-                    lblTile.Font = new Font("Arial", 5);
-                    theGrid[row, col] = "Air";
-                    lblTile.Text = theGrid[row, col];
-                    lblTile.ForeColor = textColour;
-                    lblTile.Click += LblTile_Click;
-                    flowLayoutPanel1.Controls.Add(lblTile);
-                    labelList.Add(lblTile);
-                    labelList[Getindex(row, col)].BackColor = Aircolour;
+                    theGrid[col, row] = "Air";
                 }
             }
+            DrawGrid();
             tileHeld = "Substrate";
-            //this will be replaced with a drawGrid method attached to a save file
-            //by default the save file will be a blank grid with only air tiles
             //save files will probably use run length encoding
-
             //a clock will be used to keep things going: every tick, each tile's code will be executed and the grid will be redrawn
         }
 
-      
+
 
         private int Getindex(int row, int col)
         {
-            // return row * (int)Math.Sqrt(numOfTiles) + col;
-            return (20 - row) * (20 + col - 1);
-        }//I don't know what to do with this
+            int Length = (int)Math.Sqrt(numOfTiles);
+            return row * Length + col;
+        }
 
         private void LblTile_Click(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Label theTile = (Label)sender;
             string[] ColRow = theTile.Name.Split(',');
-            int col = Convert.ToInt32(ColRow[0]), row = Convert.ToInt32(ColRow[1]);
+            int row = Convert.ToInt32(ColRow[0]), col = Convert.ToInt32(ColRow[1]);
 
-        
+
             if (me.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 theGrid[row, col] = tileHeld.ToString();
-                labelList[Getindex(row, col)].Text = theGrid[row,col];
+                labelList[Getindex(row, col)].Text = theGrid[row, col];
+                labelList[Getindex(row, col)].BackColor = GetColour(ref col, ref row);
             }
             else if (me.Button == System.Windows.Forms.MouseButtons.Right)
             {
