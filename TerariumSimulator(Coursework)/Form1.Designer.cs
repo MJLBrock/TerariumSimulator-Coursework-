@@ -31,7 +31,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.cbRndSnails = new System.Windows.Forms.CheckBox();
-            this.cbTileLables = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbFood = new System.Windows.Forms.RadioButton();
             this.rbGlass = new System.Windows.Forms.RadioButton();
@@ -53,6 +52,9 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnReload = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,17 +85,6 @@
             this.cbRndSnails.TabIndex = 19;
             this.cbRndSnails.Text = "Snails randomly appear";
             this.cbRndSnails.UseVisualStyleBackColor = true;
-            // 
-            // cbTileLables
-            // 
-            this.cbTileLables.AutoSize = true;
-            this.cbTileLables.Location = new System.Drawing.Point(619, 262);
-            this.cbTileLables.Name = "cbTileLables";
-            this.cbTileLables.Size = new System.Drawing.Size(94, 17);
-            this.cbTileLables.TabIndex = 20;
-            this.cbTileLables.Text = "Hide tile labels";
-            this.cbTileLables.UseVisualStyleBackColor = true;
-            this.cbTileLables.CheckedChanged += new System.EventHandler(this.cbTileLables_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -300,7 +291,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(618, 285);
+            this.btnSave.Location = new System.Drawing.Point(616, 291);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 24;
@@ -309,7 +300,7 @@
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(710, 285);
+            this.btnLoad.Location = new System.Drawing.Point(708, 291);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 25;
@@ -320,7 +311,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(618, 321);
+            this.label1.Location = new System.Drawing.Point(614, 354);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(168, 26);
             this.label1.TabIndex = 26;
@@ -329,11 +320,41 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(619, 357);
+            this.label2.Location = new System.Drawing.Point(615, 390);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(174, 26);
             this.label2.TabIndex = 27;
             this.label2.Text = "Right-click on a space to see what \r\nis in it";
+            // 
+            // btnReload
+            // 
+            this.btnReload.Location = new System.Drawing.Point(616, 262);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(75, 23);
+            this.btnReload.TabIndex = 28;
+            this.btnReload.Text = "Reload";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(708, 262);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.TabIndex = 29;
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(615, 327);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 18);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "Info";
             // 
             // Form1
             // 
@@ -341,12 +362,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(827, 607);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnPause);
+            this.Controls.Add(this.btnReload);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.cbTileLables);
             this.Controls.Add(this.cbRndSnails);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -365,7 +388,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbRndSnails;
-        private System.Windows.Forms.CheckBox cbTileLables;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbSubstrate;
         private System.Windows.Forms.RadioButton rbWater;
@@ -387,6 +409,9 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Label label4;
     }
 }
 

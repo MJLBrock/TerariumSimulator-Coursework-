@@ -20,7 +20,7 @@ namespace TerariumSimulator_Coursework_
         //adding all tile colours here so they can be easily changed for debugging
         //grid size can also be changed for testing, as it is only stored in one place 
         Color Beecolour = Color.LightYellow, Antcolour = Color.Black, Beetlecolour = Color.DarkGray, Snailcolour = Color.SandyBrown;
-        Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.LightYellow;
+        Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.DarkGoldenrod;
         Color Honeycolour = Color.Gold, Stemcolour = Color.Green, Flowercolour = Color.Magenta, BeeEggcolour = Color.FloralWhite;
         Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki, Glasscolour = Color.Transparent;
         Color textColour = Color.Black;
@@ -57,35 +57,6 @@ namespace TerariumSimulator_Coursework_
 
         }
 
-        private void cbTileLables_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (cbTileLables.Checked == true)
-            {
-                foreach (Control allLabels in flowLayoutPanel1.Controls)
-                {
-                    if (allLabels is Label)
-                    {
-                        string[] ColRow = allLabels.Name.Split(',');
-                        int row = Convert.ToInt32(ColRow[0]), col = Convert.ToInt32(ColRow[1]);
-                        textColour = GetColour(ref col, ref row);
-                    }
-                }
-            }
-            else
-            {
-                foreach (Control allLabels in flowLayoutPanel1.Controls)
-                {
-                    if (allLabels is Label)
-                    {
-                        textColour = Color.Black;
-                    }
-                }
-            }
-            DrawGrid();
-
-        }
-
         private void DrawGrid()
         {
             flowLayoutPanel1.Controls.Clear();
@@ -95,22 +66,20 @@ namespace TerariumSimulator_Coursework_
                 for (int col = 0; col < numColsRows; col++)
                 {
                     Label lblTile = new Label();
-                    //lblTile.BackColor = ;
                     lblTile.Size = new Size(25, 25);
                     lblTile.AutoSize = false;
                     lblTile.Name = row + "," + col;
                     lblTile.Margin = new Padding(2);
                     lblTile.Font = new Font("Arial", 5);
-                    // theGrid[row, col] = "Air";
                     lblTile.Text = theGrid[row, col];
                     lblTile.ForeColor = textColour;
                     lblTile.Click += LblTile_Click;
+                    lblTile.BackColor = GetColour(ref col, ref row);
                     flowLayoutPanel1.Controls.Add(lblTile);
                     labelList.Add(lblTile);
-                    labelList[Getindex(row, col)].BackColor = GetColour(ref col, ref row);//DrawGrid won't display colours but LblTile.click will
                 }
             }
-
+            //if the display is redrawn during runtime, colours stop updating in real time
         }
 
         private Color GetColour(ref int row, ref int col)
@@ -163,15 +132,15 @@ namespace TerariumSimulator_Coursework_
             {
                 return Snailcolour;
             }
-            if (theGrid[col, row] == "BeeEgg")
+            if (theGrid[col, row] == "Bee Egg")
             {
                 return BeeEggcolour;
             }
-            if (theGrid[col, row] == "AntEgg")
+            if (theGrid[col, row] == "Ant Egg")
             {
                 return AntEggcolour;
             }
-            if (theGrid[col, row] == "BeetleEgg")
+            if (theGrid[col, row] == "Beetle Egg")
             {
                 return BeetleEggcolour;
             }
@@ -265,6 +234,16 @@ namespace TerariumSimulator_Coursework_
             tileHeld = "Flower";
         }
 
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            //when the software runs without user inputs, this will set the tick speed to 0
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            DrawGrid();
+        }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             LoadGame(ref theGrid);
@@ -317,7 +296,7 @@ namespace TerariumSimulator_Coursework_
             //a clock will be used to keep things going: every tick, each tile's code will be executed and the grid will be redrawn
         }
 
-
+        //when I click a tile it changes colour, as it should, but after I reload (just calling DrawGrid again) it stops updating
 
         private int Getindex(int row, int col)
         {
@@ -337,13 +316,13 @@ namespace TerariumSimulator_Coursework_
             {
                 theGrid[row, col] = tileHeld.ToString();
                 labelList[Getindex(row, col)].Text = theGrid[row, col];
-                labelList[Getindex(row, col)].BackColor = GetColour(ref col, ref row);
+                labelList[Getindex(row, col)].BackColor = GetColour(ref col, ref row);//this stops working after a reload
             }
             else if (me.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 MessageBox.Show(theGrid[row, col]);
             }
-            //DrawGrid();
+            
         }
 
         private static void LoadGame(ref string[,] Grid)
