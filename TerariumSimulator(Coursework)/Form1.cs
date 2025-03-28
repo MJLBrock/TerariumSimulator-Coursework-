@@ -15,22 +15,25 @@ namespace TerariumSimulator_Coursework_
 {
     public partial class Form1 : Form
     {
+        public Form1()
+        {
+            InitializeComponent();
+        }
 
+        //grid size and colour assignments can be changed here for easy testing and debugging
         const int numOfTiles = 400;
-        //adding all tile colours here so they can be easily changed for debugging
-        //grid size can also be changed for testing, as it is only stored in one place 
         Color Beecolour = Color.LightYellow, Antcolour = Color.Black, Beetlecolour = Color.DarkGray, Snailcolour = Color.SandyBrown;
         Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.DarkGoldenrod;
         Color Honeycolour = Color.Gold, Stemcolour = Color.Green, Flowercolour = Color.Magenta, BeeEggcolour = Color.FloralWhite;
         Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki, Glasscolour = Color.Transparent;
         Color textColour = Color.Black;
+
+        //number of columns and rows
         int numColsRows;
-        string[,] theGrid = new string[(Convert.ToInt32(Math.Sqrt(numOfTiles))), (Convert.ToInt32(Math.Sqrt(numOfTiles)))];//the 2d array in which tiles will be stored before they're displayed
-        //note to self: store each tile as a char converted to string, then deconstruct each array space into a char. this way many objects can inhabit one space
-        public Form1()
-        {
-            InitializeComponent();
-        }
+
+        //the 2d array in which tiles will be stored before they're displayed
+        string[,] theGrid = new string[(Convert.ToInt32(Math.Sqrt(numOfTiles))), (Convert.ToInt32(Math.Sqrt(numOfTiles)))];
+
 
         List<Label> labelList = new List<Label>(numOfTiles);
 
@@ -47,6 +50,7 @@ namespace TerariumSimulator_Coursework_
             int tileID;
         } //https://www.w3schools.com/cs/cs_polymorphism.php for guidance on this
 
+        //classes
         public class creature : entity
         {
 
@@ -57,6 +61,39 @@ namespace TerariumSimulator_Coursework_
 
         }
 
+        public class bee : creature
+        {
+
+        }
+
+        public class ant : creature
+        {
+            //id 2
+        }
+
+        public class beetle : creature
+        {
+
+        }
+
+        public class substrate : material
+        {
+            //id 1
+        }
+
+        public class air : material
+        {
+            //id 0
+            //bool extant;//whether or not the entity will be displayed as a tile
+            //int locationX;//where on the X axis the entity is
+            //int locationY;//where on the X axis the entity is
+            bool solid = true;//whether or not other entities can inhabit the same tile (if solid = true, no other solid entity may share the same tile)
+            bool needsAir;//whether or not the entity will be deleted if there are no empty tiles around it
+            int tileID;
+        }
+
+
+        //change GUI to match theGrid
         private void DrawGrid()
         {
             flowLayoutPanel1.Controls.Clear();
@@ -82,6 +119,7 @@ namespace TerariumSimulator_Coursework_
             //if the display is redrawn during runtime, colours stop updating in real time
         }
 
+        //determine colour of tile being drawn
         private Color GetColour(ref int row, ref int col)
         {
             if (theGrid[col, row] == "Substrate")
@@ -154,80 +192,106 @@ namespace TerariumSimulator_Coursework_
             }
         }
 
+        //determine held tile type
         private void rbSubstrate_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Substrate";
         }
-
         private void rbWater_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Water";
         }
-
         private void rbAir_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Air";
         }
-
         private void rbStem_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Stem";
         }
-
         private void rbHive_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Hive";
         }
-
         private void rbGlass_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Glass";
         }
-
         private void rbHoney_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Honey";
         }
-
         private void rbBee_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Bee";
         }
-
         private void rbAnt_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Ant";
         }
-
         private void rbBeetle_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Beetle";
         }
-
         private void rbSnail_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Snail";
         }
-
         private void rbBeeEgg_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Bee Egg";
         }
-
         private void rbAntEgg_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Ant Egg";
         }
-
         private void rbBeetleEgg_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Beetle Egg";
         }
-
         private void rbFood_CheckedChanged(object sender, EventArgs e)
         {
             tileHeld = "Food";
         }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            NextStep();
+        }
+
+        private void NextStep()
+        {
+            numColsRows = (int)Math.Sqrt(numOfTiles);
+            for (int row = 0; row < numColsRows; row++)
+            {
+                for (int col = 0; col < numColsRows; col++)
+                {
+                    string Contents = theGrid[row, col];
+                    if (Contents == "Bee")
+                    {
+                        scanArea(row, col);
+                    }
+                }
+            }
+        }
+
+        private void scanArea(int row, int col)//currently scanning from 0,0 instead of bee location
+        {
+            int[,] viableSpaces = new int[5, 5];
+            for (int i = col - 2; i < col + 2; i++)
+            {
+                for (int j = row - 2; j < row + 2; j++)
+                {
+                    string Contents = theGrid[row, col];
+                    if (Contents == "Air")
+                    {
+                        viableSpaces[i,j] = 1;
+                    }
+                }
+            }
+        }
+
+
 
         private void rbFlower_CheckedChanged(object sender, EventArgs e)
         {
@@ -236,7 +300,42 @@ namespace TerariumSimulator_Coursework_
 
         private void btnPause_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Feature not implemented");
             //when the software runs without user inputs, this will set the tick speed to 0
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Clear Terrarium?", "Confirm reset", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+
+                numColsRows = (int)Math.Sqrt(numOfTiles);
+                for (int row = 0; row < numColsRows; row++)
+                {
+                    for (int col = 0; col < numColsRows - 5; col++)
+                    {
+                        theGrid[col, row] = "Air";
+                    }
+                }
+                for (int row = 0; row < numColsRows; row++)
+                {
+                    for (int col = numColsRows - 5; col < numColsRows; col++)
+                    {
+                        theGrid[col, row] = "Substrate";
+                    }
+                }
+                DrawGrid();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Feature not implemented");
+        }
+
+        private void cbRndSnails_CheckedChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Feature not implemented");
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -248,46 +347,21 @@ namespace TerariumSimulator_Coursework_
         {
             LoadGame(ref theGrid);
         }
-
-        public class bee : creature
-        {
-
-        }
-
-        public class ant : creature
-        {
-            //id 2
-        }
-
-        public class beetle : creature
-        {
-
-        }
-
-        public class substrate : material
-        {
-            //id 1
-        }
-
-        public class air : material
-        {
-            //id 0
-            //bool extant;//whether or not the entity will be displayed as a tile
-            //int locationX;//where on the X axis the entity is
-            //int locationY;//where on the X axis the entity is
-            bool solid = true;//whether or not other entities can inhabit the same tile (if solid = true, no other solid entity may share the same tile)
-            bool needsAir;//whether or not the entity will be deleted if there are no empty tiles around it
-            int tileID;
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             numColsRows = (int)Math.Sqrt(numOfTiles);
             for (int row = 0; row < numColsRows; row++)
             {
-                for (int col = 0; col < numColsRows; col++)
+                for (int col = 0; col < numColsRows - 5; col++)
                 {
                     theGrid[col, row] = "Air";
+                }
+            }
+            for (int row = 0; row < numColsRows; row++)
+            {
+                for (int col = numColsRows - 5; col < numColsRows; col++)
+                {
+                    theGrid[col, row] = "Substrate";
                 }
             }
             DrawGrid();
@@ -322,7 +396,7 @@ namespace TerariumSimulator_Coursework_
             {
                 MessageBox.Show(theGrid[row, col]);
             }
-            
+
         }
 
         private static void LoadGame(ref string[,] Grid)
@@ -331,6 +405,7 @@ namespace TerariumSimulator_Coursework_
             //StreamReader GridFile = new StreamReader(ActiveSaveFile);
             //DrawGrid(GridFile);
             //GridFile.Close();
+            MessageBox.Show("Feature not implemented");
         }
 
         private void UpdateDisplay(int row, int col, Color newColor)

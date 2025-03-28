@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
             this.cbRndSnails = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbFood = new System.Windows.Forms.RadioButton();
@@ -54,8 +53,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnReload = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnMove = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -66,25 +70,16 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(580, 580);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(615, 218);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 18);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "Options";
-            // 
             // cbRndSnails
             // 
             this.cbRndSnails.AutoSize = true;
-            this.cbRndSnails.Location = new System.Drawing.Point(619, 239);
+            this.cbRndSnails.Location = new System.Drawing.Point(6, 19);
             this.cbRndSnails.Name = "cbRndSnails";
             this.cbRndSnails.Size = new System.Drawing.Size(135, 17);
             this.cbRndSnails.TabIndex = 19;
             this.cbRndSnails.Text = "Snails randomly appear";
             this.cbRndSnails.UseVisualStyleBackColor = true;
+            this.cbRndSnails.CheckedChanged += new System.EventHandler(this.cbRndSnails_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -291,18 +286,19 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(616, 291);
+            this.btnSave.Location = new System.Drawing.Point(9, 71);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(83, 23);
             this.btnSave.TabIndex = 24;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(708, 291);
+            this.btnLoad.Location = new System.Drawing.Point(98, 71);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.Size = new System.Drawing.Size(83, 23);
             this.btnLoad.TabIndex = 25;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -311,7 +307,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(614, 354);
+            this.label1.Location = new System.Drawing.Point(6, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(168, 26);
             this.label1.TabIndex = 26;
@@ -320,7 +316,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(615, 390);
+            this.label2.Location = new System.Drawing.Point(6, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(174, 26);
             this.label2.TabIndex = 27;
@@ -328,9 +324,9 @@
             // 
             // btnReload
             // 
-            this.btnReload.Location = new System.Drawing.Point(616, 262);
+            this.btnReload.Location = new System.Drawing.Point(9, 42);
             this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(75, 23);
+            this.btnReload.Size = new System.Drawing.Size(83, 23);
             this.btnReload.TabIndex = 28;
             this.btnReload.Text = "Reload";
             this.btnReload.UseVisualStyleBackColor = true;
@@ -338,23 +334,60 @@
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(708, 262);
+            this.btnPause.Location = new System.Drawing.Point(98, 42);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.Size = new System.Drawing.Size(83, 23);
             this.btnPause.TabIndex = 29;
             this.btnPause.Text = "Pause";
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
-            // label4
+            // btnReset
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(615, 327);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 18);
-            this.label4.TabIndex = 30;
-            this.label4.Text = "Info";
+            this.btnReset.Location = new System.Drawing.Point(9, 100);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(83, 23);
+            this.btnReset.TabIndex = 31;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Location = new System.Drawing.Point(615, 386);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 97);
+            this.groupBox2.TabIndex = 32;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Info";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnMove);
+            this.groupBox3.Controls.Add(this.cbRndSnails);
+            this.groupBox3.Controls.Add(this.btnSave);
+            this.groupBox3.Controls.Add(this.btnReset);
+            this.groupBox3.Controls.Add(this.btnLoad);
+            this.groupBox3.Controls.Add(this.btnPause);
+            this.groupBox3.Controls.Add(this.btnReload);
+            this.groupBox3.Location = new System.Drawing.Point(615, 221);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 159);
+            this.groupBox3.TabIndex = 33;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Options";
+            // 
+            // btnMove
+            // 
+            this.btnMove.Location = new System.Drawing.Point(98, 100);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(83, 23);
+            this.btnMove.TabIndex = 32;
+            this.btnMove.Text = "Move";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // Form1
             // 
@@ -362,31 +395,26 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(827, 607);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnPause);
-            this.Controls.Add(this.btnReload);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnLoad);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.cbRndSnails);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Terrarium Simulator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbRndSnails;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbSubstrate;
@@ -411,7 +439,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnMove;
     }
 }
 
