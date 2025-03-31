@@ -275,17 +275,17 @@ namespace TerariumSimulator_Coursework_
             }
         }
 
-        private void scanArea(int row, int col)//currently scanning from 0,0 instead of bee location
+        private void scanArea(int row, int col)
         {
-            int[,] viableSpaces = new int[5, 5];
-            for (int i = col - 2; i < col + 2; i++)
+            int[,] viableSpaces = new int[3, 3];
+            for (int i = col - 1; i < col + 1; i++)
             {
-                for (int j = row - 2; j < row + 2; j++)
+                for (int j = row - 1; j < row + 1; j++)
                 {
-                    string Contents = theGrid[row, col];
+                    string Contents = theGrid[i, j];
                     if (Contents == "Air")
                     {
-                        viableSpaces[i,j] = 1;
+                        viableSpaces[i, j] = 1;
                     }
                 }
             }
@@ -370,8 +370,6 @@ namespace TerariumSimulator_Coursework_
             //a clock will be used to keep things going: every tick, each tile's code will be executed and the grid will be redrawn
         }
 
-        //when I click a tile it changes colour, as it should, but after I reload (just calling DrawGrid again) it stops updating
-
         private int Getindex(int row, int col)
         {
             int Length = (int)Math.Sqrt(numOfTiles);
@@ -406,18 +404,6 @@ namespace TerariumSimulator_Coursework_
             //DrawGrid(GridFile);
             //GridFile.Close();
             MessageBox.Show("Feature not implemented");
-        }
-
-        private void UpdateDisplay(int row, int col, Color newColor)
-        {
-            foreach (Control ctrl in this.flowLayoutPanel1.Controls)
-            {
-                if (ctrl.Name == row + "," + col)
-                {
-                    ctrl.Text = theGrid[row, col];
-                    break;
-                }
-            }
         }
     }
 }
