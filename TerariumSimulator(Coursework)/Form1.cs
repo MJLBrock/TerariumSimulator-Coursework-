@@ -25,8 +25,8 @@ namespace TerariumSimulator_Coursework_
         Color Beecolour = Color.LightYellow, Antcolour = Color.Black, Beetlecolour = Color.DarkGray, Snailcolour = Color.SandyBrown;
         Color Substratecolour = Color.Brown, Watercolour = Color.Blue, Aircolour = Color.LightSkyBlue, Hivecolour = Color.DarkGoldenrod;
         Color Honeycolour = Color.Gold, Stemcolour = Color.Green, Flowercolour = Color.Magenta, BeeEggcolour = Color.FloralWhite;
-        Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki, Glasscolour = Color.Transparent;
-        Color textColour = Color.Black;
+        Color BeetleEggcolour = Color.FloralWhite, AntEggcolour = Color.FloralWhite, Foodcolour = Color.Khaki, Glasscolour = Color.LightSteelBlue;
+        Color textColour = Color.Black; 
 
         //number of columns and rows
         int numColsRows;
@@ -253,6 +253,10 @@ namespace TerariumSimulator_Coursework_
         {
             tileHeld = "Food";
         }
+        private void rbFlower_CheckedChanged(object sender, EventArgs e)
+        {
+            tileHeld = "Flower";
+        }
 
         private void btnMove_Click(object sender, EventArgs e)
         {
@@ -277,15 +281,16 @@ namespace TerariumSimulator_Coursework_
 
         private void scanArea(int row, int col)
         {
-            int[,] viableSpaces = new int[3, 3];
+            int[,] viableSpaces = new int[numColsRows, numColsRows];
+
             for (int i = col - 1; i < col + 1; i++)
             {
                 for (int j = row - 1; j < row + 1; j++)
                 {
-                    string Contents = theGrid[i, j];
+                    string Contents = theGrid[j, i];
                     if (Contents == "Air")
                     {
-                        viableSpaces[i, j] = 1;
+                        viableSpaces[j, i] = 1;
                     }
                 }
             }
@@ -293,10 +298,6 @@ namespace TerariumSimulator_Coursework_
 
 
 
-        private void rbFlower_CheckedChanged(object sender, EventArgs e)
-        {
-            tileHeld = "Flower";
-        }
 
         private void btnPause_Click(object sender, EventArgs e)
         {
