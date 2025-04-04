@@ -36,7 +36,7 @@ namespace TerariumSimulator_Coursework_
 
 
         List<Label> labelList = new List<Label>(numOfTiles);
-
+        Random rand = new Random();
         public string tileHeld;
         public Color tileHeldColour;
 
@@ -273,13 +273,28 @@ namespace TerariumSimulator_Coursework_
                     string Contents = theGrid[row, col];
                     if (Contents == "Bee")
                     {
-                        scanArea(row, col);
+                        fly(scanArea(row, col), Contents, row, col);
+                        
                     }
                 }
             }
         }
 
-        private void scanArea(int row, int col)
+        private void fly(int[,] vs, string contents, int row, int col)
+        {
+            for (int i = 0; i < numColsRows; i++)
+            {
+                for (int j = 0; j < numColsRows; j++)
+                {
+                    if (vs[i,j] == 1)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private int[,] scanArea(int row, int col)
         {
             int[,] viableSpaces = new int[numColsRows, numColsRows];
 
@@ -294,6 +309,7 @@ namespace TerariumSimulator_Coursework_
                     }
                 }
             }
+            return viableSpaces;
         }
 
 
