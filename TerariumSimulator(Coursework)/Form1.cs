@@ -40,61 +40,7 @@ namespace TerariumSimulator_Coursework_
         public string tileHeld;
         public Color tileHeldColour;
 
-        public class entity
-        {
-            bool extant;//whether or not the entity will be displayed as a tile
-            int locationX;//where on the X axis the entity is
-            int locationY;//where on the X axis the entity is
-            bool solid;//whether or not other entities can inhabit the same tile (if solid = true, no other solid entity may share the same tile)
-            bool needsAir;//whether or not the entity will be deleted if there are no empty tiles around it
-            int tileID;
-        } //https://www.w3schools.com/cs/cs_polymorphism.php for guidance on this
-
-        //classes
-        public class creature : entity
-        {
-
-        }
-
-        public class material : entity
-        {
-
-        }
-
-        public class bee : creature
-        {
-
-        }
-
-        public class ant : creature
-        {
-            //id 2
-        }
-
-        public class beetle : creature
-        {
-
-        }
-
-        public class substrate : material
-        {
-            //id 1
-        }
-
-        public class air : material
-        {
-            //id 0
-            //bool extant;//whether or not the entity will be displayed as a tile
-            //int locationX;//where on the X axis the entity is
-            //int locationY;//where on the X axis the entity is
-            bool solid = true;//whether or not other entities can inhabit the same tile (if solid = true, no other solid entity may share the same tile)
-            bool needsAir;//whether or not the entity will be deleted if there are no empty tiles around it
-            int tileID;
-        }
-
-
-        //change GUI to match theGrid
-        private void DrawGrid()
+        private void DrawGrid() //change GUI to match theGrid
         {
             flowLayoutPanel1.Controls.Clear();
             numColsRows = (int)Math.Sqrt(numOfTiles);
@@ -116,7 +62,7 @@ namespace TerariumSimulator_Coursework_
                     labelList.Add(lblTile);
                 }
             }
-            //if the display is redrawn during runtime, colours stop updating in real time
+            //Error: if the display is redrawn during runtime, colours stop updating in real time
         }
 
         //determine colour of tile being drawn
@@ -263,7 +209,7 @@ namespace TerariumSimulator_Coursework_
             NextStep();
         }
 
-        private void NextStep()
+        private void NextStep() //check for tiles that can move and assign behaviour to them
         {
             numColsRows = (int)Math.Sqrt(numOfTiles);
             for (int row = 0; row < numColsRows; row++)
@@ -280,7 +226,7 @@ namespace TerariumSimulator_Coursework_
             }
         }
 
-        private void fly(int[,] vs, string contents, int row, int col)
+        private void fly(int[,] vs, string contents, int row, int col) //execute movement for flying tiles
         {
             for (int i = 0; i < numColsRows; i++)
             {
@@ -288,13 +234,13 @@ namespace TerariumSimulator_Coursework_
                 {
                     if (vs[i,j] == 1)
                     {
-
+                        
                     }
                 }
             }
         }
 
-        private int[,] scanArea(int row, int col)
+        private int[,] scanArea(int row, int col) //find spaces that a tile can move into
         {
             int[,] viableSpaces = new int[numColsRows, numColsRows];
 
@@ -306,6 +252,10 @@ namespace TerariumSimulator_Coursework_
                     if (Contents == "Air")
                     {
                         viableSpaces[j, i] = 1;
+                    }
+                    if (Contents == "Food")
+                    {
+                        viableSpaces[j, i] = 2;
                     }
                 }
             }
